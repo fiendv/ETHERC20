@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:javaee="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	
+	<!--#################### 1. 公共定义部分 (begin) #################### -->
+	<display-name>trade_gateway</display-name>
+	<session-config>
+		<session-timeout>3600</session-timeout>
+	</session-config>
+	
+	<!-- jresplus-mvc配置文件位置 -->
+	<context-param>
+		<param-name>JresConfigLocation</param-name>
+			<param-value>
+				classpath:server.properties,
+			</param-value>		
+	</context-param>
+	
+	<!--#################### 4. spring配置 #################### -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+   		 classpath*:conf/spring/remoting-main-beans.xml
+   		 classpath*:conf/spring/jresplus-cep-beans.xml
+   		 /WEB-INF/conf/spring/service-beans.xml
+		</param-value>
+	</context-param>
+	
+	<!-- 由spring载入的log4j配置文件位置 -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/conf/log4j.properties</param-value>
+	</context-param>
+
+	<!-- 设置为true或不设置，会将webAppRootKey的值写入系统参数中（System.setProperty） -->
+	<context-param>
+		<param-name>log4jExposeWebAppRoot</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	<!-- spring默认刷新log4j配置文件的间隔，单位为ms -->
+	<context-param>
+		<param-name>log4jRefreshInterval</param-name>
+		<param-value>10000</param-value>
+	</context-param>
+
+	<!-- 不配置时为webapp.root，当两个使用logj的web应用放在一个tomcat中时最好配置为不同名 -->
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>client</param-value>
+	</context-param>
+
+	
+	<!-- 是否启用外部配置文件管理功能 -->
+	<context-param>
+		<param-name>configOuterFlag</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+	<!--#################### 1. 公共定义部分 (end) #################### -->
+	
+
+	<!-- jresplus新框架增加的过滤器配置START -->
+	<!-- 此过滤器已经包含字符编码、contain、nosession（nosession支持开关） -->
+	<filter>
+		<filter-name>jresFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>jresFilter</param-value>
+		</init-param>
+	</filter>
+		
+	<filter-mapping>
+		<filter-name>jresFilter</filter-name>
+		<url-pattern>*.htm</url-pattern>
+	</filter-mapping>
+	
+	<!-- jresplus新框架增加的过滤器配置END -->
+
+	<!-- jresplus新框架增加的监听器配置START -->
+	<listener>
+		<listener-class>
+			com.hundsun.jresplus.beans.config.PropertyLocationListener
+		</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.hundsun.jresplus.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- jresplus新框架增加的监听器配置END -->
+	
+	<!--#################### 2. JRES平台定义部分 (begin) #################### -->
+	
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- jresplus新框架增加的监听器配置END -->
+	<servlet>
+	    <servlet-name>ManageCEPServlet</servlet-name>
+	    <servlet-class>com.hundsun.jres.impl.cep.servlet.ManageCEPServlet</servlet-class>
+	 </servlet>
+	 <servlet-mapping>
+	    <servlet-name>ManageCEPServlet</servlet-name>
+	    <url-pattern>/manager/cep/*</url-pattern>
+	 </servlet-mapping>
+	 <servlet>
+	    <servlet-name>CommonCEPServlet</servlet-name>
+	    <servlet-class>com.hundsun.jres.impl.cep.servlet.CommonCEPServlet</servlet-class>
+	 </servlet>
+	 <servlet-mapping>
+	    <servlet-name>CommonCEPServlet</servlet-name>
+	    <url-pattern>/common/cep/*</url-pattern>
+	 </servlet-mapping>
+	<servlet>
+		<servlet-name>jresServlet</servlet-name>
+		<servlet-class>com.hundsun.jresplus.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.xml</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>jresServlet</servlet-name>
+		<url-pattern>*.hessian</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UnitTestingServlet</servlet-name>
+		<servlet-class>com.hundsun.network.servlet.UnitTestingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UnitTestingServlet</servlet-name>
+		<url-pattern>/unittest/cep/*</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	
+	
+</web-app>

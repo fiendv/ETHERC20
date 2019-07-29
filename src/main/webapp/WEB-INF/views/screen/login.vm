@@ -1,0 +1,18 @@
+<div class="h_login-con">
+	<div class="h_login-w h_login-conimgbg">
+	<form method="post" action="login.htm">
+		<div class="h_logindiv">
+		<p>$!{errorInfo}</P>
+			<dl>
+				<dt>用户名：</dt><dd><input type="text" name="user_name" value="$!{userName}"></dd>
+				<dt>密　码：</dt><dd><input type="password" name="password" value=""></dd>
+				<dt>验证码：</dt><dd class="h_validcode"><input type="text" name="checkCode" value=""><img src="$appServer.get('/horn/checkCode/get.htm')"/></dd>
+				<input type="hidden" name="to_url" value="$!{to_url}">
+			</dl>
+			<p class="h_cred" #if($errorInfo)style="display:block" #end>$!{errorInfo}</p>
+			<div class="h_login-btn"><button type="submit">登　录</button></div>
+			<div class="h_login-txt">登录须知：</div>
+		</div>
+		</form>
+	</div>
+</div>

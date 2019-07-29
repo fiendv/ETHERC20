@@ -1,0 +1,16 @@
+$horn.addGlobal('headStyleLinks','/css/horn/h_login.css')
+$contain.get('/contain/hornhtml.htm').put('title','JresPlus快速开发平台')
+<div class="h_login-top">
+	<div class="h_login-w">
+		<div class="h_login-logo"></div>
+	</div>
+</div>
+
+$screen_content
+
+<div class="h_login-foot">
+	<div class="h_login-w">
+		<p>恒生电子 © 版权所有</p>
+	</div>
+</div>
+$contain.get('/contain/end.htm')

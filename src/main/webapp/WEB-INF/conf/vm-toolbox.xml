@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<toolbox>
+  <xhtml>true</xhtml>
+   <tool>
+     <key>stringUtils</key>
+     <scope>application</scope>
+     <class>org.apache.commons.lang.StringUtils</class>    
+   </tool>
+   <!--<tool>
+     <key>dateUtil</key>
+     <scope>application</scope>
+     <class>com.hundsun.jres.util.DateUtil</class>    
+   </tool>
+   <tool>
+     <key>dictUtil</key>
+     <scope>application</scope>
+     <class>com.hundsun.jres.mvc.util.DictCacheUtil</class>    
+   </tool>
+   <tool>
+     <key>authorizeUtil</key>
+     <scope>application</scope>
+     <class>com.hundsun.jres.mvc.util.AuthorizeUtil</class>    
+   </tool>
+   <tool>
+     <key>commonRequestUtil</key>
+     <scope>application</scope>
+     <class>com.hundsun.jres.mvc.util.CommonRequestUtil</class>    
+   </tool>
+--></toolbox>
